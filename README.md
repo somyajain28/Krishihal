@@ -1,1 +1,2 @@
+# About
 An easy-to-use agricultural advisory system for marginal farmers. It will provide tailored, up-to-date advice on critical farming issues such as crop selection, pest management, and soil health. The technology will analyze weather and satellite data and provide farmers with local language training via SMS, voice calls, or a mobile app, allowing them to make better decisions that will boost their income and production.
