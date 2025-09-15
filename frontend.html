@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmAssist - Smart Advisory for Small Farmers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .logo::before {
+            content: "🌾";
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .nav-menu a:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            transform: translateY(0);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(238, 90, 36, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Services Grid */
+        .services {
+            margin-bottom: 4rem;
+        }
+
+        .services h2 {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .service-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Features Section */
+        .features {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .features h2 {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .feature-content h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .feature-content p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact h2 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-method {
+            padding: 1.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-method:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .contact-method h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-method p {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(44, 62, 80, 0.9);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .services h2,
+            .features h2,
+            .contact h2 {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features,
+            .contact {
+                padding: 2rem 1rem;
+            }
+
+            main {
+                margin-top: 120px;
+            }
+        }
+
+        /* Accessibility */
+        .btn:focus,
+        .nav-menu a:focus {
+            outline: 3px solid #ff6b6b;
+            outline-offset: 2px;
+        }
+
+        /* Loading Animation */
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Interactive Elements */
+        .phone-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .phone-number:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">KRISHIHAL</div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Hero Section -->
+            <section id="home" class="hero">
+                <h1>Smart Farming Without Smartphones</h1>
+                <p>Get expert agricultural advice through simple voice calls and SMS. Tailored solutions for small and marginal farmers, bridging the digital divide.</p>
+                <div class="cta-buttons">
+                    <a href="tel:+1234567890" class="btn btn-primary">
+                        📞 Call Now: +9198767543210
+                    </a>
+                    <a href="#services" class="btn btn-secondary">
+                        📋 Learn More
+                    </a>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services" class="services">
+                <h2>Our Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <span class="service-icon">🌱</span>
+                        <h3>Crop Advisory</h3>
+                        <p>Get personalized advice on crop selection, planting schedules, and best practices tailored to your local conditions and soil type.</p>
+                        <a href="tel:+1234567890" class="btn btn-primary">Call for Advice</a>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🐛</span>
+                        <h3>Pest & Disease Control</h3>
+                        <p>Identify and treat crop diseases and pest infestations with expert guidance through voice calls and detailed SMS instructions.</p>
+                        <a href="sms:+1234567890?body=PEST" class="btn btn-primary">SMS: PEST</a>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🌦</span>
+                        <h3>Weather Updates</h3>
+                        <p>Receive timely weather forecasts and alerts to help you make informed decisions about irrigation, harvesting, and field activities.</p>
+                        <a href="sms:+1234567890?body=WEATHER" class="btn btn-primary">SMS: WEATHER</a>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">💰</span>
+                        <h3>Market Prices</h3>
+                        <p>Stay updated with current market prices for your crops and get advice on the best time to sell for maximum profit.</p>
+                        <a href="sms:+1234567890?body=PRICE" class="btn btn-primary">SMS: PRICE</a>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">💧</span>
+                        <h3>Irrigation Guidance</h3>
+                        <p>Optimize water usage with expert advice on irrigation timing, methods, and water conservation techniques.</p>
+                        <a href="tel:+1234567890" class="btn btn-primary">Call Expert</a>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🏦</span>
+                        <h3>Government Schemes</h3>
+                        <p>Learn about available government subsidies, loans, and support schemes for farmers in your area.</p>
+                        <a href="sms:+1234567890?body=SCHEMES" class="btn btn-primary">SMS: SCHEMES</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section id="features" class="features">
+                <h2>Why Choose FarmAssist?</h2>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-content">
+                            <h3>No Smartphone Needed</h3>
+                            <p>Works with any basic mobile phone through voice calls and simple SMS</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🗣</div>
+                        <div class="feature-content">
+                            <h3>Local Language Support</h3>
+                            <p>Get advice in your native language from experts who understand your region</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🕐</div>
+                        <div class="feature-content">
+                            <h3>24/7 Availability</h3>
+                            <p>Access emergency support and automated services anytime, day or night</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💡</div>
+                        <div class="feature-content">
+                            <h3>Personalized Advice</h3>
+                            <p>Tailored recommendations based on your farm size, location, and crops</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💰</div>
+                        <div class="feature-content">
+                            <h3>Affordable Service</h3>
+                            <p>Low-cost solutions designed specifically for small and marginal farmers</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-content">
+                            <h3>Proven Results</h3>
+                            <p>Backed by agricultural experts and proven to increase crop yields</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="contact">
+                <h2>Get Started Today</h2>
+                <p>Choose your preferred method to connect with our agricultural experts</p>
+                
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <h3>📞 Voice Support</h3>
+                        <a href="tel:+1234567890" class="phone-number">1-234-567-890</a>
+                        <p>Call for immediate assistance</p>
+                    </div>
+                    <div class="contact-method">
+                        <h3>💬 SMS Services</h3>
+                        <a href="sms:+1234567890" class="phone-number">1-234-567-890</a>
+                        <p>Text keywords for quick info</p>
+                    </div>
+                    <div class="contact-method">
+                        <h3>🆘 Emergency Line</h3>
+                        <a href="tel:+1800123456" class="phone-number">1-800-123-456</a>
+                        <p>24/7 emergency support</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; padding: 1rem; background: rgba(102, 126, 234, 0.1); border-radius: 10px;">
+                    <h3>Quick SMS Commands:</h3>
+                    <p><strong>WEATHER</strong> - Get weather forecast<br>
+                    <strong>PRICE [CROP]</strong> - Get market prices<br>
+                    <strong>PEST [ISSUE]</strong> - Pest control advice<br>
+                    <strong>HELP</strong> - List all available commands</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 FarmAssist. Empowering farmers through accessible technology.</p>
+            <p>Serving rural communities with smart agricultural solutions</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple interactions for better user experience
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for navigation links
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Add pulse animation to call-to-action buttons
+            const primaryButtons = document.querySelectorAll('.btn-primary');
+            primaryButtons.forEach(button => {
+                setInterval(() => {
+                    button.classList.add('pulse');
+                    setTimeout(() => {
+                        button.classList.remove('pulse');
+                    }, 2000);
+                }, 5000);
+            });
+
+            // Header background change on scroll
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                } else {
+                    header.style.background = 'rgba(255, 255, 255, 0.95)';
+                }
+            });
+        });
+
+        // Simple function to handle contact methods
+        function contactViaPhone() {
+            window.location.href = 'tel:+1234567890';
+        }
+
+        function contactViaSMS(keyword = '') {
+            const message = keyword ? keyword : 'HELP';
+            window.location.href = sms:+1234567890?body=${message};
+        }
+    </script>
+</body>
+</html>
