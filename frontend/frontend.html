@@ -1,251 +1,832 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KRISHIHAL - Smart Advisory for Small Farmers</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;line-height:1.6;color:#333;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;}
-.container{max-width:1200px;margin:0 auto;padding:0 20px;}
-header{background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);box-shadow:0 2px 20px rgba(0,0,0,0.1);position:fixed;width:100%;top:0;z-index:1000;transition:all 0.3s ease;}
-.header-content{display:flex;justify-content:space-between;align-items:center;padding:1rem 0;}
-.logo{display:flex;align-items:center;font-size:1.8rem;font-weight:bold;color:#2c3e50;}
-.logo::before{content:"🌾";margin-right:10px;font-size:2rem;}
-.nav-menu{display:flex;list-style:none;gap:2rem;}
-.nav-menu a{text-decoration:none;color:#2c3e50;font-weight:500;transition:color 0.3s ease;padding:0.5rem 1rem;border-radius:20px;}
-.nav-menu a:hover{color:#667eea;background:rgba(102,126,234,0.1);}
-main{margin-top:100px;padding:2rem 0;}
-.hero{text-align:center;padding:4rem 0;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:20px;margin-bottom:3rem;border:1px solid rgba(255,255,255,0.2);}
-.hero h1{font-size:3rem;color:white;margin-bottom:1rem;text-shadow:2px 2px 4px rgba(0,0,0,0.3);}
-.hero p{font-size:1.2rem;color:rgba(255,255,255,0.9);margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto;}
-.cta-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
-.btn{padding:1rem 2rem;border:none;border-radius:50px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all 0.3s ease;text-decoration:none;display:inline-flex;align-items:center;gap:10px;box-shadow:0 4px 15px rgba(0,0,0,0.2);}
-.btn-primary{background:linear-gradient(45deg,#ff6b6b,#ee5a24);color:white;transform:translateY(0);}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(238,90,36,0.4);}
-.btn-secondary{background:rgba(255,255,255,0.2);color:white;border:2px solid rgba(255,255,255,0.3);}
-.btn-secondary:hover{background:rgba(255,255,255,0.3);transform:translateY(-2px);}
-.services{margin-bottom:4rem;}
-.services h2{text-align:center;color:white;font-size:2.5rem;margin-bottom:3rem;text-shadow:2px 2px 4px rgba(0,0,0,0.3);}
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;}
-.service-card{background:rgba(255,255,255,0.95);padding:2rem;border-radius:20px;text-align:center;transition:all 0.3s ease;border:1px solid rgba(255,255,255,0.2);backdrop-filter:blur(10px);}
-.service-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(0,0,0,0.2);}
-.service-icon{font-size:3rem;margin-bottom:1rem;display:block;}
-.service-card h3{color:#2c3e50;margin-bottom:1rem;font-size:1.5rem;}
-.service-card p{color:#666;line-height:1.6;margin-bottom:1.5rem;}
-.features{background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border-radius:20px;padding:3rem;margin-bottom:4rem;border:1px solid rgba(255,255,255,0.2);}
-.features h2{text-align:center;color:white;font-size:2.5rem;margin-bottom:3rem;text-shadow:2px 2px 4px rgba(0,0,0,0.3);}
-.features-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;}
-.feature-item{display:flex;align-items:flex-start;gap:1rem;}
-.feature-icon{background:linear-gradient(45deg,#ff6b6b,#ee5a24);color:white;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
-.feature-content h3{color:white;margin-bottom:0.5rem;font-size:1.2rem;}
-.feature-content p{color:rgba(255,255,255,0.8);font-size:0.9rem;}
-.contact{background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-radius:20px;padding:3rem;text-align:center;border:1px solid rgba(255,255,255,0.2);}
-.contact h2{color:#2c3e50;font-size:2.5rem;margin-bottom:2rem;}
-.contact-methods{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-top:2rem;}
-.contact-method{padding:1.5rem;background:linear-gradient(45deg,#667eea,#764ba2);color:white;border-radius:15px;transition:all 0.3s ease;}
-.contact-method:hover{transform:translateY(-3px);box-shadow:0 8px 25px rgba(102,126,234,0.3);}
-.contact-method h3{margin-bottom:0.5rem;font-size:1.2rem;}
-.contact-method p{font-size:1.1rem;font-weight:600;}
-footer{background:rgba(44,62,80,0.9);color:white;text-align:center;padding:2rem 0;margin-top:4rem;backdrop-filter:blur(10px);}
-@media(max-width:768px){.header-content{flex-direction:column;gap:1rem;}.nav-menu{gap:1rem;flex-wrap:wrap;justify-content:center;}.hero h1{font-size:2rem;}.hero p{font-size:1rem;}.cta-buttons{flex-direction:column;align-items:center;}.btn{width:100%;max-width:300px;justify-content:center;}.services h2,.features h2,.contact h2{font-size:2rem;}.services-grid{grid-template-columns:1fr;}.features,.contact{padding:2rem 1rem;}main{margin-top:120px;}}
-.btn:focus,.nav-menu a:focus{outline:3px solid #ff6b6b;outline-offset:2px;}
-@keyframes pulse{0%{opacity:1;}50%{opacity:0.7;}100%{opacity:1;}}.pulse{animation:pulse 2s infinite;}
-.phone-number{font-size:1.5rem;font-weight:bold;color:#2c3e50;text-decoration:none;padding:0.5rem 1rem;background:rgba(102,126,234,0.1);border-radius:10px;display:inline-block;margin:0.5rem;transition:all 0.3s ease;}
-.phone-number:hover{background:rgba(102,126,234,0.2);transform:scale(1.05);}
-.hidden{display:none;}
-input, label{display:block;width:100%;margin-bottom:1rem;padding:0.5rem;border-radius:10px;border:1px solid #ccc;font-size:1rem;}
-/* Bottom Navbar */
-#bottom-nav {position:fixed;bottom:0;left:0;width:100%;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);box-shadow:0 -2px 10px rgba(0,0,0,0.1);display:flex;justify-content:space-around;padding:0.5rem 0;z-index:1000;border-top:1px solid rgba(0,0,0,0.1);}
-.btn-bottom {background:none;border:none;font-size:1.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#2c3e50;cursor:pointer;padding:0.3rem 0.5rem;transition:all 0.2s ease;}
-.btn-bottom:hover, .btn-bottom.active {color:#667eea;transform:scale(1.1);}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KRISHIHAL - Smart Advisory for Small Farmers</title>
+    <style>
+        /* CSS Reset and General Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header and Navigation */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .logo::before {
+            content: "🌾";
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .nav-menu a:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        main {
+            margin-top: 100px;
+            padding: 2rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: white;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            transform: translateY(0);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(238, 90, 36, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Services Section */
+        .services {
+            margin-bottom: 4rem;
+        }
+
+        .services h2 {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .service-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Features Section */
+        .features {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .features h2 {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .feature-icon {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .feature-content h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .feature-content p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact h2 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-method {
+            padding: 1.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-method:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .contact-method h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-method p {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(44, 62, 80, 0.9);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Responsive Design */
+        @media(max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .services h2,
+            .features h2,
+            .contact h2 {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features,
+            .contact {
+                padding: 2rem 1rem;
+            }
+
+            main {
+                margin-top: 120px;
+            }
+        }
+
+        /* Accessibility and Animations */
+        .btn:focus,
+        .nav-menu a:focus {
+            outline: 3px solid #ff6b6b;
+            outline-offset: 2px;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Additional Styles */
+        .phone-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .phone-number:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        input,
+        label,
+        select {
+            display: block;
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        /* Bottom Navbar */
+        #bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-around;
+            padding: 0.5rem 0;
+            z-index: 1000;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-bottom {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #2c3e50;
+            cursor: pointer;
+            padding: 0.3rem 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-bottom:hover,
+        .btn-bottom.active {
+            color: #667eea;
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 <body>
 
-<!-- Registration Page -->
-<section id="register-page" class="container">
-    <h2 style="color:white;text-align:center;margin-bottom:2rem;">Farmer Registration</h2>
-    <div style="max-width:400px;margin:0 auto;background:rgba(255,255,255,0.9);padding:2rem;border-radius:20px;">
-        <label>Full Name</label>
-        <input type="text" id="reg-name" placeholder="Enter your name">
-        <label>Mobile Number</label>
-        <input type="text" id="reg-mobile" placeholder="Enter mobile number">
-        <button class="btn btn-primary" onclick="registerUser()">Register</button>
-        <p style="margin-top:1rem;">Already registered? <a href="#" onclick="showLogin()">Login here</a></p>
-    </div>
-</section>
-
-<!-- Login Page -->
-<section id="login-page" class="container hidden">
-    <h2 style="color:white;text-align:center;margin-bottom:2rem;">Farmer Login</h2>
-    <div style="max-width:400px;margin:0 auto;background:rgba(255,255,255,0.9);padding:2rem;border-radius:20px;">
-        <label>Mobile Number</label>
-        <input type="text" id="login-mobile" placeholder="Enter mobile number">
-        <button class="btn btn-primary" onclick="loginUser()">Login</button>
-        <p style="margin-top:1rem;">New farmer? <a href="#" onclick="showRegister()">Register here</a></p>
-    </div>
-</section>
-
-<!-- Main Dashboard -->
-<section id="main-dashboard" class="hidden">
-<header>
-    <div class="container">
-        <div class="header-content">
-            <div class="logo">KRISHIHAL</div>
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="#dash-home">Home</a></li>
-                    <li><a href="#dash-services">Services</a></li>
-                    <li><a href="#dash-features">Features</a></li>
-                    <li><a href="#dashboard">Dashboard</a></li>
-                    <li><a href="#dash-contact">Contact</a></li>
-                </ul>
-            </nav>
+    <section id="register-page" class="container">
+        <h2 style="color:white;text-align:center;margin-bottom:2rem;">Farmer Registration</h2>
+        <div style="max-width:400px;margin:0 auto;background:rgba(255,255,255,0.9);padding:2rem;border-radius:20px;">
+            <label>Full Name</label>
+            <input type="text" id="reg-name" placeholder="Enter your name">
+            <label>Mobile Number</label>
+            <input type="text" id="reg-mobile" placeholder="Enter mobile number">
+            <label>State</label>
+            <select id="reg-state">
+                <option value="">Select your state</option>
+                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                <option value="Assam">Assam</option>
+                <option value="Bihar">Bihar</option>
+                <option value="Chhattisgarh">Chhattisgarh</option>
+                <option value="Goa">Goa</option>
+                <option value="Gujarat">Gujarat</option>
+                <option value="Haryana">Haryana</option>
+                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                <option value="Jharkhand">Jharkhand</option>
+                <option value="Karnataka">Karnataka</option>
+                <option value="Kerala">Kerala</option>
+                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Manipur">Manipur</option>
+                <option value="Meghalaya">Meghalaya</option>
+                <option value="Mizoram">Mizoram</option>
+                <option value="Nagaland">Nagaland</option>
+                <option value="Odisha">Odisha</option>
+                <option value="Punjab">Punjab</option>
+                <option value="Rajasthan">Rajasthan</option>
+                <option value="Sikkim">Sikkim</option>
+                <option value="Tamil Nadu">Tamil Nadu</option>
+                <option value="Telangana">Telangana</option>
+                <option value="Tripura">Tripura</option>
+                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                <option value="Uttarakhand">Uttarakhand</option>
+                <option value="West Bengal">West Bengal</option>
+                <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                <option value="Chandigarh">Chandigarh</option>
+                <option value="Dadra and Nagar Haveli and Daman & Diu">Dadra and Nagar Haveli and Daman & Diu</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                <option value="Ladakh">Ladakh</option>
+                <option value="Lakshadweep">Lakshadweep</option>
+                <option value="Puducherry">Puducherry</option>
+            </select>
+            <label>Type of Crop</label>
+            <select id="reg-crop">
+                <option value="">Select your crop</option>
+                <option value="Wheat">Wheat</option>
+                <option value="Rice">Rice</option>
+                <option value="Maize">Maize</option>
+                <option value="Millets">Millets</option>
+                <option value="Sugarcane">Sugarcane</option>
+                <option value="Cotton">Cotton</option>
+                <option value="Pulses">Pulses</option>
+                <option value="Oilseeds">Oilseeds</option>
+                <option value="Vegetables">Vegetables</option>
+                <option value="Fruits">Fruits</option>
+                <option value="Tea">Tea</option>
+                <option value="Coffee">Coffee</option>
+                <option value="Tobacco">Tobacco</option>
+            </select>
+            <label>Address</label>
+            <input type="text" id="reg-address" placeholder="Enter your full address">
+            <button class="btn btn-primary" onclick="registerUser()">Register</button>
+            <p style="margin-top:1rem;">Already registered? <a href="#" onclick="showLogin()">Login here</a></p>
         </div>
-    </div>
-</header>
+    </section>
 
-<main>
-    <div class="container">
+    <section id="login-page" class="container hidden">
+        <h2 style="color:white;text-align:center;margin-bottom:2rem;">Farmer Login</h2>
+        <div style="max-width:400px;margin:0 auto;background:rgba(255,255,255,0.9);padding:2rem;border-radius:20px;">
+            <label>Mobile Number</label>
+            <input type="text" id="login-mobile" placeholder="Enter mobile number">
+            <button class="btn btn-primary" onclick="loginUser()">Login</button>
+            <p style="margin-top:1rem;">New farmer? <a href="#" onclick="showRegister()">Register here</a></p>
+        </div>
+    </section>
 
-        <!-- Hero Section -->
-        <section id="dash-home" class="hero">
-            <h1>Welcome, <span id="farmer-name"></span></h1>
-            <p>Smart Farming Without Smartphones — Personalized dashboard for your farm.</p>
-        </section>
-
-        <!-- Services Section -->
-        <section id="dash-services" class="services">
-            <h2>Our Services</h2>
-            <div class="services-grid">
-                <div class="service-card"><span class="service-icon">🌱</span><h3>Crop Advisory</h3><p>Get personalized advice for your crops.</p></div>
-                <div class="service-card"><span class="service-icon">🐛</span><h3>Pest & Disease Control</h3><p>Identify and treat crop diseases.</p></div>
-                <div class="service-card"><span class="service-icon">🌦️</span><h3>Weather Updates</h3><p>Timely weather forecasts for farming.</p></div>
-                <div class="service-card"><span class="service-icon">💰</span><h3>Market Prices</h3><p>Stay updated with crop market prices.</p></div>
-                <div class="service-card"><span class="service-icon">💧</span><h3>Irrigation Guidance</h3><p>Optimize water usage with expert advice.</p></div>
-                <div class="service-card"><span class="service-icon">🏦</span><h3>Government Schemes</h3><p>Learn about subsidies, loans, and support schemes.</p></div>
+    <section id="main-dashboard" class="hidden">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">KRISHIHAL</div>
+                    <nav>
+                        <ul class="nav-menu">
+                            <li><a href="#dash-home">Home</a></li>
+                            <li><a href="#dash-services">Services</a></li>
+                            <li><a href="#dash-features">Features</a></li>
+                            <li><a href="#dashboard">Dashboard</a></li>
+                            <li><a href="#dash-contact">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-        </section>
+        </header>
 
-        <!-- Features Section -->
-        <section id="dash-features" class="features">
-            <h2>Why Choose FarmAssist?</h2>
-            <div class="features-list">
-                <div class="feature-item"><div class="feature-icon">📱</div><div class="feature-content"><h3>No Smartphone Needed</h3><p>Works with any basic phone via voice calls and SMS.</p></div></div>
-                <div class="feature-item"><div class="feature-icon">🗣️</div><div class="feature-content"><h3>Local Language Support</h3><p>Advice in your native language from experts.</p></div></div>
-                <div class="feature-item"><div class="feature-icon">🕐</div><div class="feature-content"><h3>24/7 Availability</h3><p>Emergency support anytime.</p></div></div>
+        <main>
+            <div class="container">
+                <section id="dash-home" class="hero">
+                    <h1>Welcome, <span id="farmer-name"></span></h1>
+                    <p> Smart Farming Without Smartphones </p>
+                </section>
+
+                <section id="dash-services" class="services">
+                    <h2>Our Services</h2>
+                    <div class="services-grid">
+                        <div class="service-card">
+                            <span class="service-icon">🌱</span>
+                            <h3>Crop Advisory</h3>
+                            <p>Get personalized advice for your crops.</p>
+                        </div>
+                        <div class="service-card">
+                            <span class="service-icon">🐛</span>
+                            <h3>Pest & Disease Control</h3>
+                            <p>Identify and treat crop diseases.</p>
+                        </div>
+                        <div class="service-card">
+                            <span class="service-icon">🌦️</span>
+                            <h3>Weather Updates</h3>
+                            <p>Timely weather forecasts for farming.</p>
+                        </div>
+                        <div class="service-card">
+                            <span class="service-icon">💰</span>
+                            <h3>Market Prices</h3>
+                            <p>Stay updated with crop market prices.</p>
+                        </div>
+                        <div class="service-card">
+                            <span class="service-icon">💧</span>
+                            <h3>Irrigation Guidance</h3>
+                            <p>Optimize water usage with expert advice.</p>
+                        </div>
+                        <div class="service-card">
+                            <span class="service-icon">🏦</span>
+                            <h3>Government Schemes</h3>
+                            <p>Learn about subsidies, loans, and support schemes.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="dash-features" class="features">
+                    <h2>Why Choose FarmAssist?</h2>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">📱</div>
+                            <div class="feature-content">
+                                <h3>No Smartphone Needed</h3>
+                                <p>Works with any basic phone via voice calls and SMS.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🗣️</div>
+                            <div class="feature-content">
+                                <h3>Local Language Support</h3>
+                                <p>Advice in your native language from experts.</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🕐</div>
+                            <div class="feature-content">
+                                <h3>24/7 Availability</h3>
+                                <p>Emergency support anytime.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="dashboard" class="features">
+                    <h2>Farmer Dashboard</h2>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary" onclick="showDashSection('dash-chat')">💬 Chat</button>
+                        <button class="btn btn-primary" onclick="showDashSection('dash-schemes')">📋 Govt Schemes</button>
+                        <button class="btn btn-primary" onclick="showDashSection('dash-weather')">🌦️ Weather Info</button>
+                        <button class="btn btn-primary" onclick="showDashSection('dash-advisory')">🌾 Crop Advisory</button>
+                        <button class="btn btn-secondary" onclick="logoutUser()">🚪 Logout</button>
+                    </div>
+
+                    <div id="dash-chat" class="service-card dash-section hidden">
+                        <h3>Online Chat</h3>
+                        <p>[Chat placeholder]</p>
+                    </div>
+                    <div id="dash-schemes" class="service-card dash-section hidden">
+                        <h3>Government Schemes</h3>
+                        <ul>
+                            <li>PM Kisan Scheme</li>
+                            <li>Soil Health Card</li>
+                            <li>FPO Support</li>
+                        </ul>
+                    </div>
+                    <div id="dash-weather" class="service-card dash-section hidden">
+                        <h3>Weather Info</h3>
+                        <p>Sunny, 30°C</p>
+                    </div>
+                    <div id="dash-advisory" class="service-card dash-section hidden">
+                        <h3>Crop Advisory & Pest Info</h3>
+                        <ul id="crop-advisory-list"></ul>
+                    </div>
+                    <div id="dash-market" class="service-card dash-section hidden">
+                        <h3>Market Prices</h3>
+                        <ul>
+                            <li>Wheat: ₹2200/quintal</li>
+                            <li>Rice: ₹2400/quintal</li>
+                            <li>Maize: ₹2100/quintal</li>
+                        </ul>
+                    </div>
+                    <div id="dash-user" class="service-card dash-section hidden">
+                        <h3>My Account</h3>
+                        <p><strong>Name:</strong> <span id="account-name"></span></p>
+                        <p><strong>Mobile:</strong> <span id="account-mobile"></span></p>
+                        <p><strong>State:</strong> <span id="account-state"></span></p>
+                        <p><strong>Type of Crop:</strong> <span id="account-crop"></span></p>
+                        <p><strong>Address:</strong> <span id="account-address"></span></p>
+                    </div>
+                </section>
+
+                <nav id="bottom-nav">
+                    <button class="btn-bottom" onclick="showDashSection('dash-chat')">💬 Chat</button>
+                    <button class="btn-bottom" onclick="showDashSection('dash-schemes')">📋 Schemes</button>
+                    <button class="btn-bottom" onclick="showDashSection('dash-weather')">🌦️ Weather</button>
+                    <button class="btn-bottom" onclick="showDashSection('dash-advisory')">🌾 Crop</button>
+                    <button class="btn-bottom" onclick="showDashSection('dash-user')">👤 Account</button>
+                </nav>
+
+                <section id="dash-contact" class="contact">
+                    <h2>Get Started Today</h2>
+                    <p>Choose your preferred method to connect with experts</p>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <h3>📞 Voice Support</h3>
+                            <a href="tel:+1234567890" class="phone-number">1-234-567-890</a>
+                            <p>Call for assistance</p>
+                        </div>
+                        <div class="contact-method">
+                            <h3>💬 SMS Services</h3>
+                            <a href="sms:+1234567890" class="phone-number">1-234-567-890</a>
+                            <p>Text keywords for quick info</p>
+                        </div>
+                    </div>
+                </section>
+
             </div>
-        </section>
+        </main>
+    </section>
 
-        <!-- Dashboard Section -->
-        <section id="dashboard" class="features">
-            <h2>Farmer Dashboard</h2>
-            <div class="cta-buttons">
-                <button class="btn btn-primary" onclick="showDashSection('dash-chat')">💬 Chat</button>
-                <button class="btn btn-primary" onclick="showDashSection('dash-schemes')">📋 Govt Schemes</button>
-                <button class="btn btn-primary" onclick="showDashSection('dash-weather')">🌦️ Weather Info</button>
-                <button class="btn btn-primary" onclick="showDashSection('dash-advisory')">🌾 Crop Advisory</button>
-                <button class="btn btn-secondary" onclick="logoutUser()">🚪 Logout</button>
-            </div>
+    <script>
+        // Store users in memory (frontend-only)
+        let users = [];
 
-            <div id="dash-chat" class="service-card dash-section hidden"><h3>Online Chat</h3><p>[Chat placeholder]</p></div>
-            <div id="dash-schemes" class="service-card dash-section hidden"><h3>Government Schemes</h3><ul><li>PM Kisan Scheme</li><li>Soil Health Card</li><li>FPO Support</li></ul></div>
-            <div id="dash-weather" class="service-card dash-section hidden"><h3>Weather Info</h3><p>Sunny, 30°C</p></div>
-            <div id="dash-advisory" class="service-card dash-section hidden"><h3>Crop Advisory & Pest Info</h3><ul><li>Wheat: Apply fertilizer early.</li><li>Rice: Watch for pests.</li><li>Maize: Proper irrigation needed.</li></ul></div>
-            <div id="dash-market" class="service-card dash-section hidden"><h3>Market Prices</h3><ul><li>Wheat: ₹2200/quintal</li><li>Rice: ₹2400/quintal</li><li>Maize: ₹2100/quintal</li></ul></div>
-            <div id="dash-user" class="service-card dash-section hidden"><h3>My Account</h3><p><strong>Name:</strong> <span id="account-name"></span></p><p><strong>Mobile:</strong> <span id="account-mobile"></span></p></div>
-        </section>
+        // Crop advisory data
+        const cropAdvisoryData = {
+            Wheat: ["Apply nitrogen fertilizer early.", "Monitor for rust and aphid attacks.", "Ensure proper irrigation."],
+            Rice: ["Use balanced NPK fertilizer.", "Watch for blast disease.", "Maintain water levels in paddy fields."],
+            Maize: ["Apply fertilizers at sowing.", "Control stem borer pests.", "Ensure proper irrigation."],
+            Millets: ["Sow seeds with proper spacing.", "Apply compost or organic fertilizer.", "Check for leaf spot disease."],
+            Sugarcane: ["Apply irrigation once every 10-15 days.", "Control white grubs and borers.", "Use nitrogen-rich fertilizers."],
+            Cotton: ["Apply fertilizers at proper growth stages.", "Watch for bollworms.", "Ensure proper irrigation."],
+            Pulses: ["Use rhizobium culture for nitrogen fixation.", "Control pod borer insects.", "Avoid waterlogging."],
+            Oilseeds: ["Apply phosphorous-rich fertilizers.", "Monitor for aphids and fungal diseases.", "Ensure good drainage."],
+            Vegetables: ["Use organic compost for soil health.", "Check for pests and diseases daily.", "Water in the early morning or late evening."],
+            Fruits: ["Prune regularly for better fruit growth.", "Use micronutrient sprays as required.", "Control pests with eco-friendly methods."],
+            Tea: ["Apply fertilizers according to soil tests.", "Control leaf-eating pests.", "Maintain proper irrigation."],
+            Coffee: ["Ensure shaded environment for coffee plants.", "Monitor for coffee borer beetles.", "Apply compost regularly."],
+            Tobacco: ["Apply fertilizers in split doses.", "Control leaf spot and pests.", "Ensure proper drainage."]
+        };
 
-        <!-- Bottom Navbar -->
-        <nav id="bottom-nav">
-            <button class="btn-bottom" onclick="showDashSection('dash-chat')">💬 Chat</button>
-            <button class="btn-bottom" onclick="showDashSection('dash-schemes')">📋 Schemes</button>
-            <button class="btn-bottom" onclick="showDashSection('dash-weather')">🌦️ Weather</button>
-            <button class="btn-bottom" onclick="showDashSection('dash-advisory')">🌾 Crop</button>
-            <button class="btn-bottom" onclick="showDashSection('dash-user')">👤 Account</button>
-        </nav>
+        // Show registration page
+        function showRegister() {
+            document.getElementById('register-page').classList.remove('hidden');
+            document.getElementById('login-page').classList.add('hidden');
+            document.getElementById('main-dashboard').classList.add('hidden');
+        }
 
-        <!-- Contact Section -->
-        <section id="dash-contact" class="contact">
-            <h2>Get Started Today</h2>
-            <p>Choose your preferred method to connect with experts</p>
-            <div class="contact-methods">
-                <div class="contact-method"><h3>📞 Voice Support</h3><a href="tel:+1234567890" class="phone-number">1-234-567-890</a><p>Call for assistance</p></div>
-                <div class="contact-method"><h3>💬 SMS Services</h3><a href="sms:+1234567890" class="phone-number">1-234-567-890</a><p>Text keywords for quick info</p></div>
-            </div>
-        </section>
+        // Show login page
+        function showLogin() {
+            document.getElementById('login-page').classList.remove('hidden');
+            document.getElementById('register-page').classList.add('hidden');
+            document.getElementById('main-dashboard').classList.add('hidden');
+        }
 
-    </div>
-</main>
-</section>
+        // Register user
+        function registerUser() {
+            const name = document.getElementById('reg-name').value.trim();
+            const mobile = document.getElementById('reg-mobile').value.trim();
+            const state = document.getElementById('reg-state').value.trim();
+            const crop = document.getElementById('reg-crop').value.trim();
+            const address = document.getElementById('reg-address').value.trim();
 
+            if (name === '' || mobile === '' || state === '' || crop === '' || address === '') {
+                alert("Enter all fields");
+                return;
+            }
+            users.push({
+                name,
+                mobile,
+                state,
+                crop,
+                address
+            });
+            alert("Registration successful! Please login.");
+            showLogin();
+        }
 
-<script>
-// Store users in memory (frontend-only)
-let users = [];
+        // Login user
+        function loginUser() {
+            const mobile = document.getElementById('login-mobile').value.trim();
+            const user = users.find(u => u.mobile === mobile);
+            if (user) {
+                document.getElementById('farmer-name').innerText = user.name;
+                document.getElementById('account-name').innerText = user.name;
+                document.getElementById('account-mobile').innerText = user.mobile;
+                document.getElementById('account-state').innerText = user.state;
+                document.getElementById('account-crop').innerText = user.crop;
+                document.getElementById('account-address').innerText = user.address;
 
-// Show registration page
-function showRegister(){
-    document.getElementById('register-page').classList.remove('hidden');
-    document.getElementById('login-page').classList.add('hidden');
-    document.getElementById('main-dashboard').classList.add('hidden');
-}
+                // Populate crop advisory
+                const advisoryList = document.getElementById('crop-advisory-list');
+                advisoryList.innerHTML = ""; // Clear previous items
+                const advice = cropAdvisoryData[user.crop] || ["No advisory available for this crop."];
+                advice.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    advisoryList.appendChild(li);
+                });
 
-// Show login page
-function showLogin(){
-    document.getElementById('login-page').classList.remove('hidden');
-    document.getElementById('register-page').classList.add('hidden');
-    document.getElementById('main-dashboard').classList.add('hidden');
-}
+                document.getElementById('main-dashboard').classList.remove('hidden');
+                document.getElementById('login-page').classList.add('hidden');
+                document.getElementById('register-page').classList.add('hidden');
+            } else {
+                alert("Mobile number not found. Please register.");
+            }
+        }
 
-// Register user
-function registerUser(){
-    const name = document.getElementById('reg-name').value.trim();
-    const mobile = document.getElementById('reg-mobile').value.trim();
-    if(name==='' || mobile===''){alert("Enter all fields");return;}
-    users.push({name,mobile});
-    alert("Registration successful! Please login.");
-    showLogin();
-}
+        // Dashboard section toggle
+        function showDashSection(id) {
+            ['dash-chat', 'dash-schemes', 'dash-weather', 'dash-advisory', 'dash-market', 'dash-user'].forEach(sec => document.getElementById(sec).classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+            document.querySelectorAll('#bottom-nav .btn-bottom').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`#bottom-nav .btn-bottom[onclick="showDashSection('${id}')"]`).classList.add('active');
+        }
 
-// Login user
-function loginUser(){
-    const mobile = document.getElementById('login-mobile').value.trim();
-    const user = users.find(u=>u.mobile===mobile);
-    if(user){ 
-        document.getElementById('farmer-name').innerText = user.name;
-        document.getElementById('account-name').innerText = user.name;
-        document.getElementById('account-mobile').innerText = user.mobile;
-        document.getElementById('main-dashboard').classList.remove('hidden');
-        document.getElementById('login-page').classList.add('hidden');
-        document.getElementById('register-page').classList.add('hidden');
-    } else { alert("Mobile number not found. Please register."); }
-}
+        // Logout
+        function logoutUser() {
+            showLogin();
+            alert("You are logged out (frontend prototype).");
+        }
 
-// Dashboard section toggle
-function showDashSection(id){
-    ['dash-chat','dash-schemes','dash-weather','dash-advisory','dash-market','dash-user'].forEach(sec=>document.getElementById(sec).classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
-    // Highlight active button
-    document.querySelectorAll('#bottom-nav .btn-bottom').forEach(btn=>btn.classList.remove('active'));
-    document.querySelector(`#bottom-nav .btn-bottom[onclick="showDashSection('${id}')"]`).classList.add('active');
-}
-
-// Logout
-function logoutUser(){
-    showLogin();
-    alert("You are logged out (frontend prototype).");
-}
-
-// Smooth scrolling
-document.querySelectorAll('a[href^="#"]').forEach(link=>{
-    link.addEventListener('click', function(e){
-        e.preventDefault();
-        const target=document.querySelector(this.getAttribute('href'));
-        if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
-    });
-});
-</script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
