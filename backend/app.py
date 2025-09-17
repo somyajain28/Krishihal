@@ -4,13 +4,13 @@ import pymysql.cursors
 from dotenv import load_dotenv
 import os
 from flask_cors import CORS
-# Import the functions from your services.py file
+# Import the functions from services.py file
 from services import get_weather_for_state, send_sms
 
 # Load environment variables from a .env file
 load_dotenv()
 # app.py
-# ... after your load_dotenv() call ...
+# ... after load_dotenv() call ...
 
 TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID")
 TWILIO_AUTH_TOKEN = os.getenv("TWILIO_AUTH_TOKEN")
@@ -23,7 +23,7 @@ print("-" * 20)
 app = Flask(__name__)
 CORS(app)
 
-# Database credentials from your .env file
+# Database credentials from .env file
 db_config = {
     'host': '127.0.0.1',
     'user': 'root',
